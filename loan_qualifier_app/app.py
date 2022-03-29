@@ -12,7 +12,7 @@ import questionary
 import csv
 from pathlib import Path
 
-from qualifier.utils.fileio import load_csv
+from qualifier.utils.fileio import load_csv, save_csv
 
 from qualifier.utils.calculators import (
     calculate_monthly_debt_ratio,
@@ -89,8 +89,6 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
     loan_to_value_ratio = calculate_loan_to_value_ratio(loan, home_value)
     print(f"The loan to value ratio is {loan_to_value_ratio:.02f}.")
 
-    global bank_data_filtered
-
     # Run qualification filters
     bank_data_filtered = filter_max_loan_size(loan, bank_data)
     bank_data_filtered = filter_credit_score(credit_score, bank_data_filtered)
@@ -109,41 +107,15 @@ def save_qualifying_loans(qualifying_loans):
     """
     # Complete the usability dialog for savings the CSV Files.
     
-    if (len(bank_data_filtered)) > 0:
+    if not qualifying_loans:
+        sys.exit("There are no qualifying loans.")
         
-        action = questionary.confirm("Do you want to save the qualifying loan results as a CSV file?", default=[True],).ask()
+    action = questionary.confirm("Do you want to save the qualifying loan results as a CSV file?").ask()
         
-        if action == True:
-            csv_path_2 = questionary.text("What is the output file path to save the results as 'qualifying_loans.csv'?:").ask()
-            
-            def save_csv():
+    if action:
+        csv_path_2 = questionary.text("What is the output file path to save the results as 'qualifying_loans.csv'?:").ask()
+        save_csv(Path(csv_path_2), qualifying_loans)   
 
-                # Set the output header
-                header = ["bank_data", "credit_score", "debt", "income", "loan_amount", "home_value"]
-
-                # Create a Path to a new CSV file
-                csv_path_2 = Path(csv_path_2)
-
-                print("Writing the data to a CSV file...")
-
-                # Open the output CSV file path using `with open`
-                rows = print(bank_data_filtered)
-
-                with open(csv_path_2, "w") as csvfile:
-                    
-                    # Create a csvwriter
-                    csvwriter = csv.writer(csvfile, delimiter=",")
-
-                    # Write the header to the CSV file
-                    csvwriter.writerow(header)
-
-                    # as a row in the CSV file.
-                    csvwriter.writerow(rows)
-
-        elif action:
-            sys.exit(f"You have opted out of saving the file.")
-    else:
-        sys.exit(f"There are no qualifying bank loans. Please try again.")
  
 def run():
     """The main function for running the script."""
