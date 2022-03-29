@@ -1,0 +1,21 @@
+    1  conda activate dev
+    2  cd desktop
+    3  cd bootcamp
+    4  cd module_2
+    5  ls
+    6  cd challenge_files
+    7  ls
+    8  cd saving-qualifying-loans-as-CSV-file/
+    9  ls
+   10  cd loan_qualifier_app/
+   11  ls
+   12  git status
+   13  cd ..
+   14  git status
+   15  git commit
+   16  git add loan_qualifier_app
+   17  git status
+   18  git commit -m "updated module_2 challenge, draft 1"
+   19  git status
+   20  git push
+   21  history 50 > terminal_history.txt
