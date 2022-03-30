@@ -1,6 +1,6 @@
 # Saving Qualifying Loan as a CSV File
 
-This repo contains the results of the module 2 challenge. The assignment is to add new features and enhancements to the loan qualifier application. Specifically, the added feature is the ability to save the qualifying loans to a CSV file.
+This repo contains the module 2 assignment. The assignment is to add new features and enhancements to the loan qualifier application (`app.py`). Specifically, the added feature is the ability to save the qualifying loans to a CSV file.
 
 The Fire and Questionary libraries were used to add more functionality. Our loan qualifier application uses a python command-line interface ("CLI") that allows users to see qualifying loans from lenders quickly and easily. The application works by taking in a `daily_rate_sheet` of loan criteria from various loan providers, asking the user a number of questions to evaluate their loan eligibility, and then returning to them a list of qualifying loans.
 
