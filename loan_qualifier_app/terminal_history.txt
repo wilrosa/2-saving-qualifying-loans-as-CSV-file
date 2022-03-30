@@ -1,17 +1,16 @@
-    1  conda activate dev
-    2  cd desktop
-    3  cd bootcamp
-    4  cd module_2
-    5  ls
-    6  cd challenge_files/
-    7  ls
-    8  cd saving-qualifying-loans-as-CSV-file/
-    9  ls
-   10  cd loan_qualifier_app/
-   11  ls
-   12  git status
-   13  git add README.md
-   14  git status
-   15  git commit -m "updated readme"
-   16  git status
-   17  history 50 > terminal_history.txt
+    1  cd desktop
+    2  cd bootcamp
+    3  cd module_2
+    4  ls
+    5  cd challenge_files/
+    6  ls
+    7  cd saving-qualifying-loans-as-CSV-file/
+    8  ls
+    9  cd loan_qualifier_app/
+   10  ls
+   11  python app.py
+   12  conda activate dev
+   13  ls
+   14  python app.py
+   15  python app.py
+   16  history 50 > terminal_history.txt

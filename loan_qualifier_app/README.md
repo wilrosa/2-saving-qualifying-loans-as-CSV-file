@@ -33,7 +33,6 @@ def load_bank_data():
 
     return load_csv(csvpath)
 ```
-
 Now we can dynamically set the location of the `daily_rates_sheet.csv` file.
 
 ### **Prompt the User for Loan Information**
@@ -61,7 +60,7 @@ This function will prompt the user via the command line for the applicant's info
 
 ### **Find Qualifying Loans**
 
-Based on the data collected by prompting the user for loan information, the monthly debt ratio and loan to value ratio of each applicant's loan is calculated. The data is then filtered to based on the loan qualification parameters to produce a list of qualifying loans. The variable `global bank_data_filtered` is made a `Global` variable allowing it to be used in the `save qualifying loans` function. The find qualifying loans function appears as follows:
+Based on the data collected by prompting the user for loan information, the monthly debt ratio and loan to value ratio of each applicant's loan is calculated. The data is then filtered to based on the loan qualification parameters to produce a list of qualifying loans. The find qualifying loans function appears as follows:
 
 ```python
 def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_value):
@@ -71,8 +70,6 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
 
     loan_to_value_ratio = calculate_loan_to_value_ratio(loan, home_value)
     print(f"The loan to value ratio is {loan_to_value_ratio:.02f}.")
-
-    global bank_data_filtered
 
     bank_data_filtered = filter_max_loan_size(loan, bank_data)
     bank_data_filtered = filter_credit_score(credit_score, bank_data_filtered)
@@ -94,15 +91,48 @@ Before running the application first install the following dependencies.
 ```
 ---
 ## Usage
-#### Saving Qualifying Loans
+### **Saving Qualifying Loans**
 
-1. If there is a list of qualifying loans, the application prompts the user to either save the results as a CSV file or opt out of saving the file. 
+1. If there is a list of qualifying loans, the application prompts the user to either save the results as a CSV file or opt out of saving the file. If no qualifying loans exist, then the program notifies the user and exits.
+
+```python
+def save_qualifying_loans(qualifying_loans):
+    
+    if not qualifying_loans:
+        sys.exit("There are no qualifying loans.")
+        
+    action = questionary.confirm("Do you want to save the qualifying loan results as a CSV file?").ask()
+```
 
 2. If the user chooses to save results as a CSV file, the application then prompts the user for a file path to save the file. 
 
-3. Once a file path is choosen, then the application saves the results as a CSV file according to the file path. 
+```python
+    if action:
+        csv_path_2 = questionary.text("What is the output file path to save the results as 'qualifying_loans.csv'?:").ask()
+        
+```
 
-4. If no qualifying loans exist, then the program notifies the user and (2) exits.
+3. Once a file path is choosen, then the application `save_csv` function is called to save the results as a CSV file according to the entered file path. To save the filtered qualifying loans list, the following `save_csv` function is executed. The print function enhances usability by notifying the user that the file is being saved to a csv file. The function then opens the csvpath, collects the filtered data, writes it using a "," delimiter, and looks to see if the list has a header: 
+
+```python
+        save_csv(Path(csv_path_2), qualifying_loans)
+
+def save_csv(csvpath, data, header = None):
+
+    print("Writing the data to a CSV file...")
+    with open(csvpath, "w") as csvfile:
+        csvwriter = csv.writer(csvfile, delimiter=",")
+        if header:    
+            csvwriter.writerow(header)
+        csvwriter.writerows(data)
+```
+
+### **Example of Output**
+
+* ![CLI App Dialogue](CLI_app_screenshot.png)
+
+
+
 ---
 ## Contributors
 

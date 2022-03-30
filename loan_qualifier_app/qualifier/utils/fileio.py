@@ -6,7 +6,6 @@ This contains a helper function for loading and saving CSV files.
 """
 import csv
 
-
 def load_csv(csvpath):
     """Reads the CSV file from path provided.
 
@@ -21,27 +20,28 @@ def load_csv(csvpath):
         data = []
         csvreader = csv.reader(csvfile, delimiter=",")
 
-        # Skip the CSV Header
+        # Skips the CSV Header
         next(csvreader)
 
-        # Read the CSV data
+        # Reads the CSV data
         for row in csvreader:
             data.append(row)
     return data
 
 def save_csv(csvpath, data, header = None):
 
-    # Create a Path to a new CSV file
+    # Creates a Path to a new CSV file
     print("Writing the data to a CSV file...")
 
-    # Open the output CSV file path using `with open`
+    # Opens the output CSV file path using `with open`
     with open(csvpath, "w") as csvfile:
                     
-        # Create a csvwriter
+        # Creates a csvwriter
         csvwriter = csv.writer(csvfile, delimiter=",")
 
-        # Write the header to the CSV file
+        # Writes the header to the CSV file
         if header:    
             csvwriter.writerow(header)
-        # as a row in the CSV file.
+        
+        # saves as a row in the CSV file.
         csvwriter.writerows(data)
